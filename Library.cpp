@@ -6,6 +6,35 @@
 #include <cmath>
 using namespace std;
 
+float shoot(float u, float v, float x, float t, float h, int a){
+	ofstream outfile;
+	if (h == 0.5)
+		outfile.open("shoot1.csv");
+	else if (h == 0.2)
+		outfile.open("shoot2.csv");
+	else if (h == 0.05)
+		outfile.open("shoot3.csv");
+	else //when(h == 0.02)
+		outfile.open("shoot4.csv");
+
+	float y[1], guess[1];
+	y[0] = u;
+	guess[0] = v;
+    cout << "x     u" << endl;
+	while (fabs(x) < fabs(t)){
+		RK4(y, guess, x, t, h, 2);
+		u = u + y[0];
+		v = v + guess[0];
+		x = x + h;
+		if (a == 1){
+			cout <<  x << "    " << u << endl;
+			outfile << t << x << u << endl;
+		}
+	}
+	return u;
+}
+
+
 void RK4(float u[1], float v[1], float x, float t, float h, int p)
 {
 	float k11, k12, k13, k14;
