@@ -19,8 +19,6 @@ float RK4_DE1(float (*f)(float,float),float xi,float h,float y, int N){
     float s = (K1 + K2 + 2*K3 + K4)/6 ;
     cout << s << endl;
     y = y + s;
-    cout << y << endl;
-    cout << "******" << endl;
     return y;
 }
 
