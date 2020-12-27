@@ -6,20 +6,20 @@
 #include <cmath>
 using namespace std;
 
-float RK4_DE1(float (*f)(float,float),float xi,float h,float y, int N){
-    float x = xi;
-    float K1 = h*((*f)(x,y));
-    cout << K1 << endl;
-    float K2 = h*((*f)(x  + h/2,y + K1/2 ));
-    cout << K2 << endl;
-    float K3 = h*((*f)(x  + h/2,y + K2/2 ));
-    cout << K3 << endl;
-    float K4 = h*((*f)(x  + h,y + K3));
-    cout << K4 << endl;
-    float s = (K1 + K2 + 2*K3 + K4)/6 ;
-    cout << s << endl;
-    y = y + s;
-    return y;
+void RK4(float u[1], float v[1], float x, float t, float h, int p)
+{
+	float k11, k12, k13, k14;
+	float k21, k22, k23, k24;
+	k11 = h * funcRK4(u[0], v[0], x, 1, p);
+	k21 = h * funcRK4(u[0], v[0], x, 2, p);
+	k12 = h * funcRK4(u[0] + 0.5 * k11, v[0] + 0.5 * k21, x + 0.5 * h, 1, p);
+	k22 = h * funcRK4(u[0] + 0.5 * k11, v[0] + 0.5 * k21, x + 0.5 * h, 2, p);
+	k13 = h * funcRK4(u[0] + 0.5 * k12, v[0] + 0.5 * k22, x + 0.5 * h, 1, p);
+	k23 = h * funcRK4(u[0] + 0.5 * k12, v[0] + 0.5 * k22, x + 0.5 * h, 2, p);
+	k14 = h * funcRK4(u[0] + k13, v[0] + k23, x + h, 1, p);
+	k24 = h * funcRK4(u[0] + k13, v[0] + k23, x + h, 2, p);
+	u[0] += (k11 + 2 * k12 + 2 * k13 + k14) / 6;
+	v[0] += (k21 + 2 * k22 + 2 * k23 + k24) / 6;
 }
 
 void Explicit_Euler(float(*f)(float,float),float xi,float xf,float y, int N){
